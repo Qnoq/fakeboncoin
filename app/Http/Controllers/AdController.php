@@ -19,7 +19,7 @@ class AdController extends Controller
     //
     public function index()
     {
-        $ads = DB::table('ads')->orderBy('created_at', 'DESC')->paginate(5);
+        $ads = DB::table('ads')->orderBy('created_at', 'DESC')->paginate(6);
         if(Auth::check()) {
             $messages = Message::where('seller_id', "=", auth()->user()->id)->get();
         } else {
@@ -72,6 +72,7 @@ class AdController extends Controller
 
     public function search(Request $request)
     {
+        $empty = False;
         $query = request()->input('query');
 
         if(Auth::check()) {
@@ -83,7 +84,12 @@ class AdController extends Controller
         $ads = Ad::where('title', 'like', "%$query%")
             ->orWhere('description', 'like', "%$query%")
             ->paginate(5);
+        
+        if($ads->isEmpty())
+        {
+            $empty = True;
+        }
 
-        return view('search', compact('ads', 'messages'));
+        return view('search', compact('ads', 'messages', 'empty'));
     }
 }

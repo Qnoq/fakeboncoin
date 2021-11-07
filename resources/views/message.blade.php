@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
-        <h1>Contacter le vendeur</h1>
+        <!--Header-->
+<div class="w-full m-0 p-0 bg-cover bg-bottom" style="background-image:url('cover.jpg'); height: 15vh; max-height:460px;">
+</div>
+        <h1>Contacter le vendeur {{ getSellerName($seller_id) }}</h1>
         @if (session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}
@@ -26,7 +29,7 @@
             <input type="hidden" name="seller_id" value="{{ $seller_id }}">
             <input type="hidden" name="ad_id" value="{{ $ad_id }}">
             <input type="hidden" name="buyer_id" value="{{ auth()->user()->id }}">
-            <button type="submit" class="btn btn-success">Envoyer</button>
+            <button type="submit" class="bg-gray-800 hover:bg-gray-600 text-white font-bold p-2 rounded shadow-lg hover:shadow-xl transition duration-200">Envoyer</button>
         </form>
     </div>
 @endsection
